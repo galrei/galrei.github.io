@@ -5,7 +5,7 @@
 <div class="w3-container" style="padding:0px 0px" id="atas"></div>
 <div class="w3-container" style="padding:0px 0px" id="beranda"></div>
 
-# [Gerbang Ekonomi Masa Depan 丰](https://esaldo.github.io)
+# [Gerbang Ekonomi Masa Depan 丰](https://kebunsaldo.github.io)
 <nav>
     <ul>
         <li><a href="#beranda"> Beranda</a></li>
@@ -59,9 +59,9 @@ Berikut adalah beberapa proyek yang pernah saya kerjakan:
 17. Hari ini 21 Agustus 2024 baru dapat kabar kalau akun fb saya sudah menghasilkan $0.04 USD
    
 ## Gambar
-<img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fesaldo.github.io">
+<img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fkebunsaldo.github.io">
 
-![Logo GitHub](https://img.shields.io/github/followers/esaldo)
+![Logo GitHub](https://img.shields.io/github/followers/kebunsaldo)
 
 <details>
   <summary>
@@ -144,7 +144,7 @@ Mencoba buat token BRC20 <a href="https://ordiscan.com/inscription/10321277" tar
 ```
 
 ![deprecated](https://img.shields.io/badge/Pengingat-8A2BE2) ![luar biasa](https://awesome.re/badge.svg) 
-![](https://img.shields.io/github/followers/esaldo) ![](https://img.shields.io/github/stars/esaldo/esaldo.github.io)
+![](https://img.shields.io/github/followers/kebunsaldo) ![](https://img.shields.io/github/stars/esaldo/kebunsaldo.github.io)
 ![Logo GitHub](https://img.shields.io/badge/Gambar-8A2BE2)
 
 Memulai dari gerbang pengetahuan perdagangan, investasi dan pembangunan
@@ -1462,13 +1462,13 @@ void CloseAllPositions(bool pos, bool pend)
 
 <div align="center">
 	<div class="w3-container" style="padding: 0px 0px" id="vividbeloved"></div>
-	<a href="https://www.facebook.com/vividbeloved" target="_blank">
+	<a href="https://www.facebook.com/gubuksaldo" target="_blank">
 		<img src="https://img.shields.io/badge/Facebook-%231877F2.svg?&style=flat-square&logo=facebook&logoColor=white" alt="Facebook">
 	</a>
-	<a href="https://www.twitter.com/vividbeloved" target="_blank">
+	<a href="https://www.twitter.com/gubuksaldo" target="_blank">
 		<img src="https://img.shields.io/badge/twitter-%231877F2.svg?&style=flat-square&logo=twitter&logoColor=white" alt="Twitter">
 	</a>
-	<a href="https://www.telegram.com/getboz" target="_blank">
+	<a href="https://www.telegram.com/jackmusk" target="_blank">
 		<img src="https://img.shields.io/badge/telegram-%231877F2.svg?&style=flat-square&logo=telegram&logoColor=white" alt="Telegram">
 	</a>
 	<a href="https://www.youtube.com/@getbos" target="_blank">
@@ -1477,7 +1477,7 @@ void CloseAllPositions(bool pos, bool pend)
 	<a href="https://www.getalby.com/getbos" target="_blank">
 		<img src="https://img.shields.io/badge/getalby-%231877F2.svg?&style=flat-square&logo=getalby&logoColor=white" alt="Getalby">
 	</a>
-	<a href="https://primal.net/evo" target="_blank">
+	<a href="https://primal.net/sibot" target="_blank">
 		<img src="https://img.shields.io/badge/primal-%231877F2.svg?&style=flat-square&logo=primal&logoColor=white" alt="Primal">
 	</a>
 	<a href="https://www.bitcoin.org/id" target="_blank">

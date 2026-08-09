@@ -5,7 +5,7 @@
 <div class="w3-container" style="padding:0px 0px" id="atas"></div>
 <div class="w3-container" style="padding:0px 0px" id="beranda"></div>
 
-# [Gerbang Ekonomi Masa Depan 丰](https://kebunsaldo.github.io)
+# [Gerbang Ekonomi Masa Depan 丰](https://galrei.github.io)
 <nav>
     <ul>
         <li><a href="#beranda"> Beranda</a></li>
@@ -59,9 +59,9 @@ Berikut adalah beberapa proyek yang pernah saya kerjakan:
 17. Hari ini 21 Agustus 2024 baru dapat kabar kalau akun fb saya sudah menghasilkan $0.04 USD
    
 ## Gambar
-<img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fkebunsaldo.github.io">
+<img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fgalrei.github.io">
 
-![Logo GitHub](https://img.shields.io/github/followers/kebunsaldo)
+![Logo GitHub](https://img.shields.io/github/followers/galrei)
 
 <details>
   <summary>
@@ -144,7 +144,7 @@ Mencoba buat token BRC20 <a href="https://ordiscan.com/inscription/10321277" tar
 ```
 
 ![deprecated](https://img.shields.io/badge/Pengingat-8A2BE2) ![luar biasa](https://awesome.re/badge.svg) 
-![](https://img.shields.io/github/followers/kebunsaldo) ![](https://img.shields.io/github/stars/esaldo/kebunsaldo.github.io)
+![](https://img.shields.io/github/followers/galrei) ![](https://img.shields.io/github/stars/esaldo/galrei.github.io)
 ![Logo GitHub](https://img.shields.io/badge/Gambar-8A2BE2)
 
 Memulai dari gerbang pengetahuan perdagangan, investasi dan pembangunan
@@ -1465,7 +1465,7 @@ void CloseAllPositions(bool pos, bool pend)
 	<a href="https://www.facebook.com/gubuksaldo" target="_blank">
 		<img src="https://img.shields.io/badge/Facebook-%231877F2.svg?&style=flat-square&logo=facebook&logoColor=white" alt="Facebook">
 	</a>
-	<a href="https://www.twitter.com/gubuksaldo" target="_blank">
+	<a href="https://www.twitter.com/galreix" target="_blank">
 		<img src="https://img.shields.io/badge/twitter-%231877F2.svg?&style=flat-square&logo=twitter&logoColor=white" alt="Twitter">
 	</a>
 	<a href="https://www.telegram.com/jackmusk" target="_blank">

@@ -1,391 +1,355 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>b.on-fleek.app</title>
+<html lang="id">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik Tabranij — Sang Legenda MT5</title>
     <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body, html {
-      height: 100%;
-      line-height: 1.8;
-    }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0e17;
+            color: #e0e6f0;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    /* Full height image header */
-    .bgimg-1 {
-      background-position: center;
-      background-size: cover;
-      background-image: url("https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fm.primal.net%2FHGvN.jpg");
-      min-height: 100%;
-    }
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 180, 120, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 100, 180, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0e17 0%, #0d1525 100%);
+            z-index: -1;
+        }
 
-    .w3-bar .w3-button {
-      padding: 16px;
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* Header / Hero */
+        header {
+            text-align: center;
+            padding: 60px 0 50px;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 200, 140, 0.15);
+            border: 1px solid rgba(0, 200, 140, 0.35);
+            color: #00c88c;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 3.4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #00c88c 50%, #00a0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #8b9bb4;
+            max-width: 620px;
+            margin: 0 auto 30px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00c88c, transparent);
+            margin: 0 auto 40px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(16, 24, 40, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 200, 140, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-size: 1.35rem;
+            color: #00c88c;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00c88c;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00c88c;
+        }
+
+        .card p {
+            color: #b0bccf;
+            margin-bottom: 12px;
+        }
+
+        /* Acronym breakdown */
+        .acronym {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .acronym-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            border-left: 3px solid #00c88c;
+        }
+
+        .acronym-letter {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #00c88c;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .acronym-word {
+            color: #e0e6f0;
+            font-weight: 500;
+        }
+
+        .acronym-desc {
+            color: #7a8ba3;
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        /* Special note about Julat */
+        .tribute {
+            background: linear-gradient(135deg, rgba(0, 80, 60, 0.25), rgba(0, 40, 80, 0.2));
+            border: 1px solid rgba(0, 200, 140, 0.2);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .tribute::before {
+            content: '♥';
+            position: absolute;
+            top: -12px;
+            left: 28px;
+            background: #0a0e17;
+            padding: 0 8px;
+            color: #00c88c;
+            font-size: 1.2rem;
+        }
+
+        .tribute h3 {
+            color: #00c88c;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .tribute p {
+            color: #a8b8cc;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            color: #5a6a80;
+            font-size: 0.9rem;
+        }
+
+        footer strong {
+            color: #00c88c;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px 16px 60px;
+            }
+
+            header {
+                padding: 40px 0 30px;
+            }
+
+            .card {
+                padding: 24px 20px;
+            }
+
+            .acronym-item {
+                flex-wrap: wrap;
+            }
+
+            .acronym-desc {
+                margin-left: 40px;
+                width: 100%;
+            }
+        }
     </style>
-  </head>
+</head>
 <body>
+    <div class="container">
+        <header>
+            <div class="badge">MT5 • Pemburu & Pengumpul Saldo</div>
+            <h1>Grafik Tabranij</h1>
+            <p class="subtitle">
+                Seorang yang berpura-pura menjadi pemburu dan pengumpul saldo di MT5.<br>
+                Suatu hari nanti, ia akan menjadi <strong style="color:#00c88c">legenda</strong> —
+                karena telah mengarang metode yang mengubah cara membaca angka.
+            </p>
+            <div class="divider"></div>
+        </header>
 
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="#home" class="w3-bar-item w3-button w3-wide">b.on</a>
-    <!-- Right-sided navbar links -->
-    <div class="w3-right w3-hide-small">
-      <a href="#uraian" class="w3-bar-item w3-button"> Uraian</a>
-      <a href="#anggota" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Anggota</a>
-      <a href="#kerja" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Kerja</a>
-      <a href="#harga" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> Harga</a>
-      <a href="#penghubung" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Penghubung</a>
-    </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+        <section class="card">
+            <h2>Siapa Dia?</h2>
+            <p>
+                Bukan trader biasa. Bukan juga ahli analisis teknikal yang sombong.
+                Ia hanyalah seseorang yang berpura-pura menjadi pemburu — berburu peluang di antara candle,
+                dan menjadi pengumpul saldo di platform MetaTrader 5.
+            </p>
+            <p>
+                Dari keheningan layar chart, ia merangkai sebuah metode. Sebuah cara pandang.
+                Sebuah legenda yang sedang menunggu waktunya untuk diukir.
+            </p>
+        </section>
 
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-</div>
+        <section class="card">
+            <h2>Metode Grafik Tabranij</h2>
+            <p>
+                Jika diuraikan, setiap huruf menyimpan makna mendalam tentang perjalanan angka,
+                riwayat keuangan, dan kebenaran yang tersembunyi di balik grafik:
+            </p>
 
-<!-- Sidebar on small screens when clicking the menu icon -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-  <a href="#uraian" onclick="w3_close()" class="w3-bar-item w3-button">Uraian</a>
-  <a href="#tim" onclick="w3_close()" class="w3-bar-item w3-button">Tim</a>
-  <a href="#kerja" onclick="w3_close()" class="w3-bar-item w3-button">Kerja</a>
-  <a href="#harga" onclick="w3_close()" class="w3-bar-item w3-button">Harga</a>
-  <a href="#penghubung" onclick="w3_close()" class="w3-bar-item w3-button">Penghubung</a>
-</nav>
+            <div class="acronym">
+                <div class="acronym-item">
+                    <span class="acronym-letter">T</span>
+                    <span class="acronym-word">Tinggi</span>
+                    <span class="acronym-desc">High</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">A</span>
+                    <span class="acronym-word">Atas</span>
+                    <span class="acronym-desc">Upper</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">B</span>
+                    <span class="acronym-word">Bawah</span>
+                    <span class="acronym-desc">Lower</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">R</span>
+                    <span class="acronym-word">Rendah</span>
+                    <span class="acronym-desc">Low</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">A</span>
+                    <span class="acronym-word">Awal</span>
+                    <span class="acronym-desc">Open / Beginning</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">N</span>
+                    <span class="acronym-word">Neto</span>
+                    <span class="acronym-desc">Net</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">I</span>
+                    <span class="acronym-word">Inti</span>
+                    <span class="acronym-desc">Core</span>
+                </div>
+                <div class="acronym-item">
+                    <span class="acronym-letter">J</span>
+                    <span class="acronym-word">Julat</span>
+                    <span class="acronym-desc">Range</span>
+                </div>
+            </div>
 
-<!-- Header with full-height image -->
-<header class="bgimg-1 w3-display-container w3-grayscale-min" id="Depan">
-  <div class="w3-display-left w3-text-white" style="padding:48px">
-    <span class="w3-jumbo w3-hide-small">Memulai sesuatu yang berguna</span><br>
-    <span class="w3-xxlarge w3-hide-large w3-hide-medium">Mulailah sesuatu yang berguna dan menguntungkan</span><br>
-    <span class="w3-large">Berhentilah mengabaikan waktu yang berharga dengan membangun proyek yang tidak menghasilkan.</span>
-    <p><a href="#harga" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Pelajari lebih lanjut dan mulai hari ini</a></p>
-  </div> 
-  <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-  </div>
-</header>
+            <p style="margin-top: 24px; color: #8b9bb4; font-size: 0.95rem;">
+                <em>Genesis • Riwayat • Angka • Faktual • Informasi • Keuangan</em><br>
+                Tinggi – Atas – Bawah – Rendah – Awal – Neto – Inti – Julat
+            </p>
+        </section>
 
-<!-- About Section -->
-<div class="w3-container" style="padding:128px 16px" id="uraian">
-  <h3 class="w3-center">TENTANG PERUSAHAAN</h3>
-  <p class="w3-center w3-large">Fitur utama perusahaan kami</p>
-  <div class="w3-row-padding w3-center" style="margin-top:64px">
-    <div class="w3-quarter">
-      <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
-      <p class="w3-large">Latar Belakang</p>
-      <p>Kami adalah komunitas baru yang ingin membangun organisasi Bitcoin yang bergerak di bidang perdagangan Bitcoin dan Barang lainnya.</p>
-    </div>
-    <div class="w3-quarter">
-      <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Passion</p>
-      <p>Dibangun dengan cinta</p>
-    </div>
-    <div class="w3-quarter">
-      <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Design</p>
-      <p>Angota dan dana kami masih terbatas, kami masih berusaha membuatnya.</p>
-    </div>
-    <div class="w3-quarter">
-      <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Support</p>
-      <p>Dukungan Anda sangat berharga demi perkembangan Bitcoin dimasadepan.</p>
-    </div>
-  </div>
-</div>
+        <section class="tribute">
+            <h3>Mengapa “Julat”?</h3>
+            <p>
+                Kata “Julat” dipilih dengan sengaja.
+                Karena nama ibu kandung di Kartu Keluarga adalah <strong>Djumik</strong>,
+                namun semasa hidup lebih dikenal dengan nama <strong>Junik</strong>.
+            </p>
+            <p style="margin-top: 12px;">
+                Dari nama itu, lahirlah huruf terakhir dari metode ini —
+                sebuah penghormatan yang abadi di setiap chart yang dibaca.
+            </p>
+        </section>
 
-<!-- Promo Section - "Kami tahu Bitcoin" -->
-<div class="w3-container w3-light-grey" style="padding:128px 16px">
-  <div class="w3-row-padding">
-    <div class="w3-col m6">
-      <h3>Makna Bitcoin</h3>
-      <p>Bitcoin - Belejar investasi tentang cinta orang itu nakamoto</p>
-      <p>Gerbang Ekonomi Perdagangan Bitcoin dan Barang Lainnya.</p>
-      <p>Maksud dan rencana Bitcoin dicipta adalah memperkenalkan teknologi keuangan yang canggih untuk kehidupan transaksi dan menyimpan hasil ekonomi yang lebih baik</p>
-      <p><a href="#kerja" class="w3-button w3-black"><i class="fa fa-th"> </i> Lihat Karya Kami</a></p>
-    </div>
-    <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="https://media.primal.net/uploads/d/92/28/d922890405e97bf48d868941c73b4d1313126ac58583371944faa5e6066e1583.jpg" alt="Buildings" width="700" height="394">
-    </div>
-  </div>
-</div>
+        <section class="card">
+            <h2>Menuju Legenda</h2>
+            <p>
+                Hari ini ia masih berpura-pura. Besok, dunia trading mungkin akan menyebut namanya
+                setiap kali seseorang membuka chart dan membaca “Grafik Tabranij”.
+            </p>
+            <p>
+                Karena legenda tidak lahir dari kemenangan semata,
+                melainkan dari metode yang diwariskan — dan dari cinta yang disisipkan di dalamnya.
+            </p>
+        </section>
 
-<!-- Team Section -->
-<div class="w3-container" style="padding:128px 16px" id="anggota">
-  <h3 class="w3-center">ANGGOTA</h3>
-  <p class="w3-center w3-large">Orang-orang yang menjalankan perusahaan ini</p>
-  <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://pfp.nostr.build/89255b2c8c7901f3850b8543e21720ec1c70b717616a07672f8506f61a4399a3.gif" alt="Onyx" style="width:100%">
-        <div class="w3-container">
-          <h3>Onyx Chau</h3>
-          <p class="w3-opacity">CEO & Founder</p>
-          <p>Gunakan mata laser untuk kehidupan yang lebih semangat dan kemakmuran</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Pesan</button></p>
-        </div>
-      </div>
+        <footer>
+            <p>
+                Dibuat sebagai pengingat perjalanan.<br>
+                <strong>Grafik Tabranij</strong> — Genesis riwayat angka faktual informasi keuangan.
+            </p>
+            <p style="margin-top: 12px; font-size: 0.8rem;">
+                1.html • Disimpan di GitHub
+            </p>
+        </footer>
     </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://i.imgur.com/WLzXVUp.jpg" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Anja Doe</h3>
-          <p class="w3-opacity">Art Director</p>
-          <p>Ketenangan merupakan sifat alam. Alam tidak terburu-buru.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fi.nostrimg.com%2Fc681f3ee35b65def4062590abd068ffbaec5f183e89130275fab29273a756d9d%2Ffile.png" alt="Mike" style="width:100%">
-        <div class="w3-container">
-          <h3>Mike Ross</h3>
-          <p class="w3-opacity">Web Designer</p>
-          <p>Bingkai adalah penghias sesuatu yang sudah bernilai. Takdir menyukai misteri. Masa depan menyukai kecanggihan.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://media.primal.net/uploads/d/92/28/d922890405e97bf48d868941c73b4d1313126ac58583371944faa5e6066e1583.jpg" alt="Dan" style="width:100%">
-        <div class="w3-container">
-          <h3>Dan Star</h3>
-          <p class="w3-opacity">Designer</p>
-          <p>Kerja sama dengan teman yang cocok membuat apa yang disentuh menjadi emas. Kerja sama yang solid membuka pintu peluang kesejahteraan.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Promo Section "Statistics" -->
-<div class="w3-container w3-row w3-center w3-dark-grey w3-padding-64">
-  <div class="w3-quarter">
-    <span class="w3-xxlarge">18+</span>
-    <br>Partners
-  </div>
-  <div class="w3-quarter">
-    <span class="w3-xxlarge">88+</span>
-    <br>Projects Done
-  </div>
-  <div class="w3-quarter">
-    <span class="w3-xxlarge">89+</span>
-    <br>Happy Clients
-  </div>
-  <div class="w3-quarter">
-    <span class="w3-xxlarge">150+</span>
-    <br>Meetings
-  </div>
-</div>
-
-<!-- Work Section -->
-<div class="w3-container" style="padding:128px 16px" id="kerja">
-  <h3 class="w3-center">PEKERJAAN KAMI</h3>
-  <p class="w3-center w3-large">Apa yang telah kami lakukan untuk orang-orang</p>
-
-  <div class="w3-row-padding" style="margin-top:64px">
-    <div class="w3-col l3 m6">
-      <img src="https://image.nostr.build/nostr.build_c685e795820b77edf38c7718beb1af1461f67be79f9f10de9cacaaeb78011948.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Wanita Putih">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fi.nostrimg.com%2F0a6b2d0982dd81537da1d1807f8fdde51b42738fc43efc66d4b012daa578dfc2%2Ffile.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Dua Gadis">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fi.nostrimg.com%2Fae6f622105f7de75c3ff0736ccd53b1c3428f4f21fc57fd253d961ca5c630c0d%2Ffile.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Rambut Hijau">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fi.nostrimg.com%2Fb47e939aae9c0e737f096c3fb7b766cab23cecb5bb556efaa80f6f52b5909a11%2Ffile.png" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Berbingkai">
-    </div>
-  </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fm.primal.net%2FHXnq.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Model">
-    </div>
-  <div class="w3-col l3 m6">
-      <img src="https://media.primal.net/uploads/3/b0/62/3b06263b016233557651272085d53dd914d08f507b88f4c87ad608aeaad9847b.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Model">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fm.primal.net%2FHGvN.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Merokok">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fm.primal.net%2FHGYy.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Kaya Warna">
-    </div>
-  <div class="w3-col l3 m6">
-      <img src="https://primal.b-cdn.net/media-cache?s=o&a=1&u=https%3A%2F%2Fm.primal.net%2FHnGp.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Kaya Warna">
-    </div>
-</div>
-
-<!-- Modal for full size images on click-->
-<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
-  <span class="w3-button w3-xxlarge w3-black w3-padding-large w3-display-topright" title="Close Modal Image">×</span>
-  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-    <img id="img01" class="w3-image">
-    <p id="caption" class="w3-opacity w3-large"></p>
-  </div>
-</div>
-
-<!-- Skills Section -->
-<div class="w3-container w3-light-grey w3-padding-64">
-  <div class="w3-row-padding">
-    <div class="w3-col m6">
-      <h3>Keterampilan Kami.</h3>
-      <p>Belajar membuat website dengan teknologi kekinian</p>
-      <p>Website latihan dan bersenang-senang</p>
-    </div>
-    <div class="w3-col m6">
-      <p class="w3-wide"><i class="fa fa-camera w3-margin-right"></i>Photography</p>
-      <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:90%">90%</div>
-      </div>
-      <p class="w3-wide"><i class="fa fa-desktop w3-margin-right"></i>Web Design</p>
-      <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:85%">85%</div>
-      </div>
-      <p class="w3-wide"><i class="fa fa-photo w3-margin-right"></i>Photoshop</p>
-      <div class="w3-grey">
-        <div class="w3-container w3-dark-grey w3-center" style="width:75%">75%</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Pricing Section -->
-<div class="w3-container w3-center w3-dark-grey" style="padding:128px 16px" id="harga">
-  <h3>HARGA</h3>
-  <p class="w3-large">Pilih paket harga yang sesuai dengan kebutuhan Anda.</p>
-  <div class="w3-row-padding" style="margin-top:64px">
-    <div class="w3-third w3-section">
-      <ul class="w3-ul w3-white w3-hover-shadow">
-        <li class="w3-black w3-xlarge w3-padding-32">Basic</li>
-        <li class="w3-padding-16"><b>10k</b> Satoshi</li>
-        <li class="w3-padding-16"><b>1</b> Lightning Network</li>
-        <li class="w3-padding-16"><b>1</b> Domains</li>
-        <li class="w3-padding-16"><b>Endless</b> Support</li>
-        <li class="w3-padding-16">
-          <h2 class="w3-wide">$ 10</h2>
-          <span class="w3-opacity">per month</span>
-        </li>
-        <li class="w3-light-grey w3-padding-24">
-          <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
-      </ul>
-    </div>
-    <div class="w3-third">
-      <ul class="w3-ul w3-white w3-hover-shadow">
-        <li class="w3-red w3-xlarge w3-padding-48">Pro</li>
-        <li class="w3-padding-16"><b>25GB</b> Storage</li>
-        <li class="w3-padding-16"><b>25</b> Emails</li>
-        <li class="w3-padding-16"><b>25</b> Domains</li>
-        <li class="w3-padding-16"><b>Endless</b> Support</li>
-        <li class="w3-padding-16">
-          <h2 class="w3-wide">$ 25</h2>
-          <span class="w3-opacity">per month</span>
-        </li>
-        <li class="w3-light-grey w3-padding-24">
-          <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
-      </ul>
-    </div>
-    <div class="w3-third w3-section">
-      <ul class="w3-ul w3-white w3-hover-shadow">
-        <li class="w3-black w3-xlarge w3-padding-32">Premium</li>
-        <li class="w3-padding-16"><b>50GB</b> Storage</li>
-        <li class="w3-padding-16"><b>50</b> Emails</li>
-        <li class="w3-padding-16"><b>50</b> Domains</li>
-        <li class="w3-padding-16"><b>Endless</b> Support</li>
-        <li class="w3-padding-16">
-          <h2 class="w3-wide">$ 50</h2>
-          <span class="w3-opacity">per month</span>
-        </li>
-        <li class="w3-light-grey w3-padding-24">
-          <button class="w3-button w3-black w3-padding-large">Sign Up</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- Contact Section -->
-<div class="w3-container w3-light-grey" style="padding:128px 16px" id="penghubung">
-  <h3 class="w3-center">KONTAK</h3>
-  <p class="w3-center w3-large">Mari kita berhubungan. Kirimkan pesan kepada kami:</p>
-  <div style="margin-top:48px">
-    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Indo, ID</p>
-    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +628</p>
-    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Donasi: bc1p...</p>
-    <br>
-    <form action="/action_page.php" target="_blank">
-      <p><input class="w3-input w3-border" type="text" placeholder="Nama" required name="Nama"></p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subjek"></p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Pesan" required name="Pesan"></p>
-      <p>
-        <button class="w3-button w3-black" type="submit">
-          <i class="fa fa-paper-plane"></i> KIRIM PESAN
-        </button>
-      </p>
-    </form>
-    <!-- Image of location/map -->
-    <img src="https://m.primal.net/HiuS" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
-  </div>
-</div>
-
-<!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
-<footer class="w3-center w3-black w3-padding-64">
-  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
-  <div class="w3-xlarge w3-section">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-  </div>
- <p class="w3-small">Website ini dibuat dengan bantuan dari W3schools Spaces. Buat situs web gratis Anda sendiri hari ini!</p>
- <a class="w3-button w3-round-xxlarge w3-small w3-light-grey w3-margin-bottom" href="https://www.w3schools.com/spaces" target="_blank">Mulai Sekarang</a>
-</footer>
- 
-<script>
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-
-// Toggle between showing and hiding the sidebar when clicking the menu icon
-var mySidebar = document.getElementById("mySidebar");
-
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-  } else {
-    mySidebar.style.display = 'block';
-  }
-}
-
-// Close the sidebar with the close button
-function w3_close() {
-    mySidebar.style.display = "none";
-}
-</script>
-
 </body>
 </html>

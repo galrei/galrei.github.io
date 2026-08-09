@@ -144,7 +144,7 @@ Mencoba buat token BRC20 <a href="https://ordiscan.com/inscription/10321277" tar
 ```
 
 ![deprecated](https://img.shields.io/badge/Pengingat-8A2BE2) ![luar biasa](https://awesome.re/badge.svg) 
-![](https://img.shields.io/github/followers/galrei) ![](https://img.shields.io/github/stars/esaldo/galrei.github.io)
+![](https://img.shields.io/github/followers/galrei) ![](https://img.shields.io/github/stars/galrei/galrei.github.io)
 ![Logo GitHub](https://img.shields.io/badge/Gambar-8A2BE2)
 
 Memulai dari gerbang pengetahuan perdagangan, investasi dan pembangunan

@@ -54,9 +54,20 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
+        /* Bismillah Top */
+        .bismillah-top {
+            text-align: center;
+            padding: 1.25rem 1rem 0.5rem;
+            font-family: 'Amiri', serif;
+            font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+            color: var(--primary-light);
+            background: linear-gradient(180deg, rgba(15, 118, 110, 0.12), transparent);
+            letter-spacing: 1px;
+        }
+
         /* Navbar */
         .navbar {
-            position: fixed;
+            position: sticky;
             top: 0;
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
@@ -137,7 +148,7 @@
             display: flex;
             align-items: center;
             position: relative;
-            padding: 6rem 1.5rem 4rem;
+            padding: 4rem 1.5rem 4rem;
             background: radial-gradient(ellipse at top, rgba(15, 118, 110, 0.15), transparent 60%),
                         radial-gradient(ellipse at bottom right, rgba(245, 158, 11, 0.08), transparent 50%);
         }
@@ -232,11 +243,6 @@
         .balance-sub {
             font-size: 0.9rem;
             color: var(--text-muted);
-        }
-        .progress-ring {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
         }
         .target-info {
             display: grid;
@@ -689,6 +695,13 @@
             padding: 3rem 1.5rem 2rem;
             text-align: center;
         }
+        .footer-arabic {
+            font-family: 'Amiri', serif;
+            font-size: clamp(1.3rem, 3vw, 1.7rem);
+            color: var(--primary-light);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.5px;
+        }
         .footer-logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -706,12 +719,6 @@
             color: var(--text-muted);
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
-        }
-        .bismillah {
-            font-family: 'Amiri', serif;
-            font-size: 1.3rem;
-            color: var(--primary-light);
-            margin-bottom: 1rem;
         }
 
         /* Toast */
@@ -778,6 +785,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Bismillah di paling atas -->
+    <div class="bismillah-top">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1141,7 +1154,9 @@
 
     <!-- Footer -->
     <footer>
-        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="footer-arabic">
+            هَٰذَا مِن فَضْلِ رَبِّي
+        </div>
         <div class="footer-logo">Barokah <span>Corp</span></div>
         <p class="footer-text">
             Organisasi transaksi MT5 yang dibangun atas dasar kerjasama, disiplin, dan doa. 

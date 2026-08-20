@@ -19,66 +19,86 @@
       --fg: #e8eefc;
       --muted: #8b97b8;
       --primary: #4ec8ff;
-      --border: rgba(232, 238, 252, 0.1);
+      --border: rgba(232, 238, 252, 0.12);
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; }
     button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
-    #stage { position: fixed; inset: 0; }
-    canvas { display: block; }
-    .hud {
-      position: fixed; z-index: 4; pointer-events: none;
-      inset: 0; display: flex; flex-direction: column;
+    a { color: var(--muted); text-decoration: none; }
+    a:hover { color: var(--fg); }
+    #lab {
+      display: flex; flex-direction: column;
+      height: 100dvh; min-height: 560px; overflow: hidden;
+    }
+    #viewport { position: relative; flex: 1; min-height: 0; background: #05060d; }
+    #viewport canvas { display: block; width: 100%; height: 100%; }
+    .overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 3;
+      display: flex; flex-direction: column;
     }
     header {
-      pointer-events: auto;
+      pointer-events: none;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px; gap: 12px;
+      padding: 12px 16px;
     }
-    .brand {
-      font-family: Syne, sans-serif; letter-spacing: 0.38em;
-      font-size: 13px; color: var(--primary); font-weight: 700;
+    header a, header nav { pointer-events: auto; }
+    .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: Syne, sans-serif; letter-spacing: .22em; font-weight: 700;
     }
-    header a {
-      color: var(--muted); text-decoration: none; font-size: 12px;
+    .logo svg { width: 28px; height: 28px; }
+    nav { display: flex; gap: 4px; align-items: center; }
+    nav a {
+      height: 36px; display: inline-flex; align-items: center;
+      padding: 0 12px; font-size: 14px; border-radius: 8px;
     }
-    header a:hover { color: var(--fg); }
     .hint {
-      text-align: center; font-size: 12px; color: var(--muted);
-      pointer-events: none; padding: 0 16px;
+      text-align: center; font-size: 13px; color: var(--muted); padding: 0 16px;
     }
-    .panel {
-      pointer-events: auto;
-      margin: auto 12px 12px auto;
-      width: min(360px, calc(100% - 24px));
-      max-height: min(72vh, 640px);
-      overflow: auto;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      backdrop-filter: blur(12px);
+    .pill {
+      pointer-events: none; margin: auto auto 16px;
+      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 8px 22px; font-family: Syne, sans-serif;
+      letter-spacing: .38em; font-size: 13px; color: var(--primary); font-weight: 700;
+    }
+    aside.panel {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      overflow: auto; max-height: 44vh; padding: 16px 18px;
+    }
+    @media (min-width: 900px) {
+      #lab { flex-direction: row; }
+      aside.panel {
+        max-height: none; width: 360px; flex-shrink: 0;
+        border-top: 0; border-left: 1px solid var(--border);
+      }
+    }
+    .kicker {
+      font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .22em;
+      color: var(--muted); text-transform: uppercase; margin: 0 0 8px;
     }
     .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 12px; }
     .chip {
-      border: 0; border-radius: 999px; height: 30px; padding: 0 10px;
+      border: 0; border-radius: 999px; height: 32px; padding: 0 10px;
       background: rgba(232,238,252,0.06); color: var(--muted); font-size: 12px;
     }
     .chip.on { background: var(--fg); color: var(--bg); }
-    article { background: var(--bg); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
-    article h2 { margin: 0; font-family: Syne, sans-serif; font-size: 18px; }
+    article.card { background: var(--bg); border-radius: 10px; padding: 12px; margin-bottom: 14px; }
     .letter { font-family: Syne, sans-serif; font-size: 24px; margin-right: 6px; }
-    .formula { color: var(--primary); font-size: 12px; margin: 6px 0; }
-    .detail { font-size: 13px; line-height: 1.5; color: #d7def0; }
-    .row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
-    .row span.name { width: 56px; font-size: 12px; }
+    article h2 { display: inline; margin: 0; font-family: Syne, sans-serif; font-size: 18px; }
+    .en { color: var(--muted); font-size: 11px; letter-spacing: .12em; margin-left: 6px; text-transform: uppercase; }
+    .formula { color: var(--primary); font-size: 12px; margin: 8px 0 6px; font-family: Syne, sans-serif; }
+    .detail { font-size: 13.5px; line-height: 1.55; color: #d7def0; margin: 0; }
+    .row { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
+    .row .name { width: 56px; font-size: 12px; font-weight: 500; }
     .row input { flex: 1; accent-color: var(--primary); }
     .row .val { width: 44px; text-align: right; font-variant-numeric: tabular-nums; font-size: 12px; }
-    .derived { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
+    .derived { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 12px 0; }
     .derived button {
-      display: flex; justify-content: space-between; align-items: baseline;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
       border: 0; border-radius: 8px; padding: 8px 10px;
-      background: rgba(232,238,252,0.05); color: var(--fg);
+      background: rgba(232,238,252,0.05); color: var(--fg); font-size: 12px;
     }
     .derived button.on { background: rgba(232,238,252,0.12); }
     .presets { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -87,19 +107,40 @@
       background: rgba(232,238,252,0.05); color: var(--muted); font-size: 12px;
     }
     .presets button:hover { color: var(--fg); }
-    .kicker { font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .22em; color: var(--muted); text-transform: uppercase; }
     .label3d {
-      font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .16em;
+      font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .14em;
       color: #e8eefc; white-space: nowrap; user-select: none;
-      text-shadow: 0 0 8px #041018;
+      text-shadow: 0 1px 8px #041018, 0 0 18px #041018;
       pointer-events: auto; cursor: pointer;
     }
-    .label3d small { display: block; letter-spacing: .28em; opacity: .75; font-size: 9px; }
     .label3d.on { color: #fff; }
-    @media (max-width: 720px) {
-      .hud { justify-content: space-between; }
-      .panel { margin: 0 0 0 0; width: 100%; max-height: 42vh; border-radius: 14px 14px 0 0; }
+    #wiki { padding: 64px 24px 80px; max-width: 980px; margin: 0 auto; }
+    #wiki h2 { font-family: Syne, sans-serif; font-size: clamp(28px, 4vw, 40px); margin: 8px 0 12px; }
+    #wiki .lead { color: var(--muted); max-width: 640px; line-height: 1.6; }
+    .grid { display: grid; gap: 12px; margin-top: 28px; }
+    @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .grid button {
+      text-align: left; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px; color: inherit;
     }
+    .grid button:hover { border-color: rgba(78,200,255,.35); }
+    .src {
+      margin-top: 48px; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); background: var(--surface);
+    }
+    .src img { width: 100%; display: block; max-height: 420px; object-fit: contain; }
+    .map { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+    .map dl { display: grid; gap: 10px; margin: 16px 0 0; }
+    @media (min-width: 700px) { .map dl { grid-template-columns: 1fr 1fr; } }
+    .map div { display: flex; justify-content: space-between; gap: 12px; }
+    .map dt { font-family: Syne, sans-serif; }
+    .map dd { margin: 0; color: var(--muted); font-size: 14px; }
+    footer.site {
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--muted);
+    }
+    footer.site b { font-family: Syne, sans-serif; letter-spacing: .28em; color: var(--primary); font-weight: 600; }
   </style>
   <script type="importmap">
   {
@@ -111,37 +152,91 @@
   </script>
 </head>
 <body>
-  <div id="stage"></div>
-  <div class="hud">
-    <header>
-      <span class="brand">TABRANIJ</span>
-      <a href="https://github.com/galrei/tabranij">Sumber</a>
-    </header>
-    <p class="hint">Cermin ilmiah anatomi lilin harga. Seret untuk memutar.</p>
+  <section id="lab">
+    <div id="viewport">
+      <div class="overlay">
+        <header>
+          <a class="logo" href="#lab">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 3 L21.2 8.2 L21.2 23.8 L16 29 L10.8 23.8 L10.8 8.2 Z" fill="#4ec8ff"/>
+              <path d="M16 6.2 L19.1 9.4 L19.1 22.6 L16 25.8 L12.9 22.6 L12.9 9.4 Z" fill="#0b1a2c"/>
+              <circle cx="16" cy="3.6" r="1.15" fill="#3b9eff"/>
+              <circle cx="16" cy="28.4" r="1.15" fill="#ff5a3c"/>
+            </svg>
+            TABRANIJ
+          </a>
+          <nav>
+            <a href="#lab">Lab</a>
+            <a href="#anatomi">Anatomi</a>
+            <a href="https://github.com/galrei/tabranij">Sumber</a>
+          </nav>
+        </header>
+        <p class="hint">Cermin ilmiah anatomi lilin harga. Seret untuk memutar.</p>
+        <div class="pill">TABRANIJ</div>
+      </div>
+    </div>
     <aside class="panel" id="panel"></aside>
-  </div>
+  </section>
+
+  <section id="wiki">
+    <p class="kicker" id="anatomi">Delapan unsur</p>
+    <h2>TABRANIJ adalah anatomi lengkap satu lilin harga.</h2>
+    <p class="lead">Empat harga bebas — Tinggi, Awal, Inti, Rendah — membentuk empat turunan: Atas, Bawah, Neto, Julat. Neto adalah tubuh kristal yang lahir dari Awal dan Inti. Inti adalah harga kini dan harga penutupan.</p>
+    <div class="grid" id="cards"></div>
+    <div class="src">
+      <img src="tabranij-source.jpg" alt="Diagram sumber TABRANIJ: kristal harga dengan label Tinggi, Atas, Inti, Neto, Awal, Bawah, Rendah, dan Julat." />
+    </div>
+    <div class="map">
+      <h3 style="font-family:Syne,sans-serif;margin:0 0 8px">Empat harga, empat turunan</h3>
+      <p class="lead" style="margin:0">Parameter TABRANIJ bukan OHLC. Neto adalah tubuh — selisih Awal dan Inti — bukan harga penutupan.</p>
+      <dl>
+        <div><dt>Tinggi</dt><dd>Harga tertinggi periode</dd></div>
+        <div><dt>Atas</dt><dd>max(Awal, Inti) — tepi atas Neto</dd></div>
+        <div><dt>Bawah</dt><dd>min(Awal, Inti) — tepi bawah Neto</dd></div>
+        <div><dt>Rendah</dt><dd>Harga terendah periode</dd></div>
+        <div><dt>Awal</dt><dd>Harga pembuka</dd></div>
+        <div><dt>Neto</dt><dd>Tubuh = |Inti − Awal|</dd></div>
+        <div><dt>Inti</dt><dd>Harga kini / harga penutupan</dd></div>
+        <div><dt>Julat</dt><dd>Tinggi − Rendah</dd></div>
+      </dl>
+    </div>
+    <footer class="site">
+      <b>T A B R A N I J</b>
+      <span>Model kristal harga · <a href="https://github.com/galrei/tabranij">galrei/tabranij</a></span>
+    </footer>
+  </section>
+
   <script type="module">
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const ANATOMY = {
   tinggi: { letter: "T", name: "Tinggi", en: "High", color: "#3b9eff", formula: "max(harga dalam periode)",
-    detail: "Ujung atas sumbu — harga tertinggi. Bola biru di puncak kristal." },
+    summary: "Ujung atas sumbu — harga tertinggi yang tercapai.",
+    detail: "Tinggi adalah puncak julat. Pada kristal, ia duduk di bola biru di ujung sumbu atas." },
   atas: { letter: "A", name: "Atas", en: "Top", color: "#dce7ff", formula: "max(Awal, Inti)",
-    detail: "Tepi atas tubuh Neto. Jika Inti ≥ Awal, Atas = Inti. Jika Inti < Awal, Atas = Awal." },
+    summary: "Puncak tubuh Neto — tepi atas kristal.",
+    detail: "Atas adalah tepi atas tubuh Neto. Jika Inti ≥ Awal, Atas = Inti. Jika Inti < Awal, Atas = Awal." },
   bawah: { letter: "B", name: "Bawah", en: "Bottom", color: "#9aa8c7", formula: "min(Awal, Inti)",
-    detail: "Tepi bawah tubuh Neto. Lawan dari Atas. Sumbu menuju Rendah tumbuh dari sini." },
+    summary: "Dasar tubuh Neto — tepi bawah kristal.",
+    detail: "Bawah adalah tepi bawah tubuh Neto. Jika Inti ≥ Awal, Bawah = Awal. Jika Inti < Awal, Bawah = Inti." },
   rendah: { letter: "R", name: "Rendah", en: "Low", color: "#ff5a3c", formula: "min(harga dalam periode)",
-    detail: "Ujung bawah sumbu — harga terendah. Bola merah-oranye di dasar kristal." },
+    summary: "Ujung bawah sumbu — harga terendah yang tercapai.",
+    detail: "Rendah adalah dasar julat. Pada kristal, ia duduk di bola merah-oranye di ujung sumbu bawah." },
   awal: { letter: "A", name: "Awal", en: "Open", color: "#2ee6a8", formula: "harga pembuka periode",
-    detail: "Harga saat periode dimulai. Bersama Inti, ia membentuk tubuh Neto." },
+    summary: "Harga saat periode dimulai — pintu masuk kristal.",
+    detail: "Awal adalah harga pembuka. Bersama Inti, ia membentuk tubuh Neto." },
   neto: { letter: "N", name: "Neto", en: "Body", color: "#4ec8ff", formula: "|Inti − Awal|",
-    detail: "Tubuh kristal, bukan sebuah harga. Terbentuk dari Awal (pembuka) dan Inti (kini / tutup)." },
+    summary: "Tubuh kristal — terbentuk dari harga Awal dan harga Inti.",
+    detail: "Neto adalah tubuh kristal, bukan sebuah harga. Ia terbentuk dari Awal (pembuka) dan Inti (kini / penutupan)." },
   inti: { letter: "I", name: "Inti", en: "Close / Last", color: "#6d8cff", formula: "harga kini / harga penutupan",
-    detail: "Harga saat ini sekaligus harga akhir. Pada lilin naik menempel di Atas; pada lilin turun di Bawah." },
+    summary: "Harga saat ini dan harga akhir periode.",
+    detail: "Inti adalah harga kini sekaligus harga penutupan. Pada lilin naik menempel di Atas; pada lilin turun di Bawah." },
   julat: { letter: "J", name: "Julat", en: "Range", color: "#5ce1ff", formula: "Tinggi − Rendah",
-    detail: "Seluruh tinggi kristal — jarak dari Rendah ke Tinggi." },
+    summary: "Seluruh tinggi kristal — amplitudo periode.",
+    detail: "Julat adalah jarak dari Rendah ke Tinggi. Kurung di kiri kristal mengukur keseluruhan batang." },
 };
 const ORDER = ["tinggi","atas","bawah","rendah","awal","neto","inti","julat"];
 const PRESETS = {
@@ -152,12 +247,7 @@ const PRESETS = {
   Palu: { tinggi: 112.2, awal: 110.4, inti: 111.6, rendah: 96.1 },
   "Tembak bintang": { tinggi: 118.8, awal: 102.4, inti: 101.1, rendah: 100.2 },
 };
-
-const state = {
-  prices: { ...PRESETS.Kristal },
-  selected: "neto",
-  autoRotate: true,
-};
+const state = { prices: { ...PRESETS.Kristal }, selected: "neto" };
 
 function derived(p) {
   const atas = Math.max(p.awal, p.inti);
@@ -168,9 +258,8 @@ function sanitize(p) {
   const awal = +p.awal, inti = +p.inti;
   return { awal, inti, tinggi: Math.max(+p.tinggi, awal, inti), rendah: Math.min(+p.rendah, awal, inti) };
 }
-
 const JULAT = 4.7;
-function layout(p) {
+function layoutOf(p) {
   const d = derived(p);
   const range = Math.max(d.julat, 0.01);
   const k = JULAT / range;
@@ -186,7 +275,6 @@ function layout(p) {
     radius: 0.92, bullish: d.naik,
   };
 }
-
 function hexRing(y, r, twist = Math.PI / 6) {
   const pts = [];
   for (let i = 0; i < 6; i++) {
@@ -223,22 +311,26 @@ function buildCrystal(radius, bodyHeight, tipHeight) {
   return geo;
 }
 
-const stage = document.getElementById("stage");
+const viewport = document.getElementById("viewport");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x05060d);
-scene.fog = new THREE.Fog(0x05060d, 14, 32);
-const camera = new THREE.PerspectiveCamera(36, innerWidth / innerHeight, 0.1, 80);
-camera.position.set(0.1, 0.2, 8.3);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+scene.fog = new THREE.Fog(0x05060d, 12, 28);
+const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 80);
+camera.position.set(0.15, 0.35, 8.1);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-renderer.setSize(innerWidth, innerHeight);
-stage.appendChild(renderer.domElement);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+viewport.appendChild(renderer.domElement);
 const labelRenderer = new CSS2DRenderer();
-labelRenderer.setSize(innerWidth, innerHeight);
 labelRenderer.domElement.style.position = "absolute";
 labelRenderer.domElement.style.inset = "0";
 labelRenderer.domElement.style.pointerEvents = "none";
-stage.appendChild(labelRenderer.domElement);
+viewport.appendChild(labelRenderer.domElement);
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.85;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enablePan = false;
@@ -248,56 +340,71 @@ controls.maxDistance = 14;
 controls.minPolarAngle = Math.PI * 0.18;
 controls.maxPolarAngle = Math.PI * 0.82;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 0.5;
-controls.addEventListener("start", () => { state.autoRotate = false; controls.autoRotate = false; });
+controls.autoRotateSpeed = 0.55;
+controls.addEventListener("start", () => { controls.autoRotate = false; });
 
-scene.add(new THREE.HemisphereLight(0xc5ddff, 0x070910, 0.5));
-scene.add(new THREE.AmbientLight(0xffffff, 0.12));
-const spot = new THREE.SpotLight(0x9ed8ff, 48, 40, 0.55, 0.7);
-spot.position.set(5.5, 7, 5);
-scene.add(spot);
-const spot2 = new THREE.SpotLight(0x7a93ff, 22, 30, 0.7, 0.8);
-spot2.position.set(-5, 1.5, 4);
-scene.add(spot2);
+scene.add(new THREE.HemisphereLight(0xc5ddff, 0x070910, 0.55));
+scene.add(new THREE.AmbientLight(0x9ec8ff, 0.18));
+const key = new THREE.SpotLight(0x9ed8ff, 60, 50, 0.55, 0.7);
+key.position.set(5.5, 7, 5); scene.add(key);
+const fill = new THREE.SpotLight(0x7a93ff, 28, 40, 0.7, 0.8);
+fill.position.set(-5, 1.5, 4); scene.add(fill);
+const rim = new THREE.PointLight(0x4ec8ff, 8, 8);
+scene.add(rim);
+
+const grid = new THREE.GridHelper(20, 40, 0x1e3358, 0x152038);
+grid.position.y = -2.7;
+scene.add(grid);
+
+const sparkGeo = new THREE.BufferGeometry();
+const spark = [];
+for (let i = 0; i < 80; i++) spark.push((Math.random()-0.5)*8, (Math.random()-0.5)*9, (Math.random()-0.5)*6);
+sparkGeo.setAttribute("position", new THREE.Float32BufferAttribute(spark, 3));
+scene.add(new THREE.Points(sparkGeo, new THREE.PointsMaterial({ color: 0x7ec8ff, size: 0.035, transparent: true, opacity: 0.45 })));
 
 const crystal = new THREE.Mesh();
 scene.add(crystal);
-const wickMat = new THREE.MeshStandardMaterial({ color: 0x9bb8d8, metalness: 0.55, roughness: 0.28, emissive: 0x1a3050, emissiveIntensity: 0.28 });
-const upperWick = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 1, 8), wickMat);
-const lowerWick = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 1, 8), wickMat.clone());
+const wickGeo = new THREE.CylinderGeometry(0.016, 0.016, 1, 8);
+const wickMat = new THREE.MeshStandardMaterial({ color: 0xb8d4ee, metalness: 0.55, roughness: 0.28, emissive: 0x1a3050, emissiveIntensity: 0.4 });
+const upperWick = new THREE.Mesh(wickGeo, wickMat);
+const lowerWick = new THREE.Mesh(wickGeo, wickMat.clone());
 scene.add(upperWick, lowerWick);
 function orb(color) {
-  const m = new THREE.Mesh(new THREE.SphereGeometry(0.085, 24, 24), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.15, roughness: 0.25 }));
+  const m = new THREE.Mesh(
+    new THREE.SphereGeometry(0.09, 24, 24),
+    new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.4, roughness: 0.22 }),
+  );
   scene.add(m);
   return m;
 }
 const highOrb = orb(0x3b9eff);
 const lowOrb = orb(0xff5a3c);
-const intiGem = new THREE.Mesh(new THREE.OctahedronGeometry(0.16, 0), new THREE.MeshStandardMaterial({ color: 0x6d8cff, emissive: 0x6d8cff, emissiveIntensity: 0.7, roughness: 0.28, metalness: 0.35 }));
+const intiGem = new THREE.Mesh(
+  new THREE.OctahedronGeometry(0.16, 0),
+  new THREE.MeshStandardMaterial({ color: 0x6d8cff, emissive: 0x6d8cff, emissiveIntensity: 0.85, roughness: 0.25, metalness: 0.35 }),
+);
 scene.add(intiGem);
 
 const labelObjs = {};
-function makeLabel(id, extra = "") {
+function makeLabel(id) {
   const el = document.createElement("div");
   el.className = "label3d";
-  el.innerHTML = `<b>${ANATOMY[id].letter}</b> ${ANATOMY[id].name.toUpperCase()}${extra}`;
-  el.onclick = () => { state.selected = id; renderPanel(); };
+  el.innerHTML = `<b>${ANATOMY[id].letter}</b> ${ANATOMY[id].name.toUpperCase()}`;
+  el.onclick = () => { state.selected = id; applyLayout(); renderPanel(); };
   const obj = new CSS2DObject(el);
   scene.add(obj);
   labelObjs[id] = { el, obj };
 }
-ORDER.filter((id) => id !== "neto").forEach((id) => makeLabel(id));
-const netoSprite = makeCanvasText();
-scene.add(netoSprite);
+ORDER.filter((id) => id !== "neto").forEach(makeLabel);
 
-function makeCanvasText() {
+const netoSprite = (() => {
   const c = document.createElement("canvas");
   c.width = 256; c.height = 256;
-  const g = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true }));
+  const g = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthTest: false }));
   g.userData.canvas = c;
-  g.scale.set(1.15, 1.15, 1);
+  scene.add(g);
   return g;
-}
+})();
 function drawNeto(active, scale) {
   const c = netoSprite.userData.canvas;
   const ctx = c.getContext("2d");
@@ -307,15 +414,13 @@ function drawNeto(active, scale) {
   ctx.font = "700 92px Syne, sans-serif";
   ctx.fillText("N", 128, 118);
   ctx.font = "600 28px Syne, sans-serif";
-  ctx.letterSpacing = "8px";
   ctx.fillText("NETO", 128, 162);
   netoSprite.material.map.needsUpdate = true;
-  netoSprite.scale.setScalar(Math.min(1.2, Math.max(0.38, scale)));
+  netoSprite.scale.setScalar(Math.min(1.15, Math.max(0.4, scale)));
 }
 
 const julatPts = new THREE.BufferGeometry();
-const julatLine = new THREE.Line(julatPts, new THREE.LineBasicMaterial({ color: 0x5ce1ff }));
-scene.add(julatLine);
+scene.add(new THREE.Line(julatPts, new THREE.LineBasicMaterial({ color: 0x5ce1ff })));
 
 function setWick(mesh, from, to) {
   const h = Math.abs(to - from);
@@ -326,17 +431,19 @@ function setWick(mesh, from, to) {
 }
 
 function applyLayout() {
-  const L = layout(state.prices);
+  const L = layoutOf(state.prices);
   if (crystal.geometry) crystal.geometry.dispose();
+  if (crystal.material) crystal.material.dispose();
   crystal.geometry = buildCrystal(L.radius, L.bodyH, L.tipH);
   crystal.position.set(0, L.crystalY, 0);
   crystal.material = new THREE.MeshPhysicalMaterial({
-    color: L.bullish ? 0xd2f1ff : 0xffe4ec,
-    roughness: 0.07, metalness: 0.04, transmission: 0.86, thickness: 1.4, ior: 1.52,
-    clearcoat: 1, iridescence: 0.65, transparent: true,
-    attenuationColor: L.bullish ? 0x3d6ec8 : 0x8a3d5a, attenuationDistance: 0.95,
-    emissive: state.selected === "neto" ? 0x4ec8ff : 0x071018,
-    emissiveIntensity: state.selected === "neto" ? 0.22 : 0.03,
+    color: L.bullish ? 0xd8f4ff : 0xffe4ec,
+    roughness: 0.08, metalness: 0.05, transmission: 0.72, thickness: 1.35, ior: 1.5,
+    clearcoat: 1, iridescence: 0.55, transparent: true, opacity: 1,
+    attenuationColor: L.bullish ? 0x3d6ec8 : 0x8a3d5a, attenuationDistance: 1.1,
+    emissive: state.selected === "neto" ? 0x4ec8ff : 0x12304a,
+    emissiveIntensity: state.selected === "neto" ? 0.28 : 0.08,
+    envMapIntensity: 1.4,
   });
   const apexY = L.crystalY + L.bodyH / 2 + L.tipH;
   const nadirY = L.crystalY - L.bodyH / 2 - L.tipH;
@@ -347,16 +454,18 @@ function applyLayout() {
   intiGem.position.set(0, L.yInti, 0);
   intiGem.material.color.set(L.bullish ? 0x2ee6a8 : 0xff5a3c);
   intiGem.material.emissive.set(L.bullish ? 0x2ee6a8 : 0xff5a3c);
+  rim.position.set(0, L.yNeto, 0);
+  grid.position.y = L.yLow - 0.42;
   netoSprite.position.set(0, L.yNeto, 0);
   drawNeto(state.selected === "neto", L.bodyH / 1.7);
   const pos = {
-    tinggi: [0.95, L.yHigh, 0],
-    atas: [1.25, L.yBodyTop + L.tipH * 0.45, 0],
-    inti: [2.15, L.yInti, 0],
-    bawah: [1.15, L.yBodyBot - L.tipH * 0.15, 0],
-    rendah: [1.05, L.yLow, 0],
-    awal: [-2.35, L.yAwal, 0],
-    julat: [-2.15, L.yJulat, 0],
+    tinggi: [1.05, L.yHigh, 0],
+    atas: [1.35, L.yBodyTop + L.tipH * 0.45, 0],
+    inti: [2.25, L.yInti, 0],
+    bawah: [1.2, L.yBodyBot - L.tipH * 0.18, 0],
+    rendah: [1.1, L.yLow, 0],
+    awal: [-2.4, L.yAwal, 0],
+    julat: [-2.2, L.yJulat, 0],
   };
   for (const id of Object.keys(pos)) {
     labelObjs[id].obj.position.set(...pos[id]);
@@ -380,14 +489,13 @@ function renderPanel() {
     <div class="chips">
       ${ORDER.map((id) => `<button class="chip ${state.selected===id?"on":""}" data-id="${id}"><span style="color:${state.selected===id?"":ANATOMY[id].color}">${ANATOMY[id].letter}</span> ${ANATOMY[id].name}</button>`).join("")}
     </div>
-    <article>
-      <div><span class="letter" style="color:${sel.color}">${sel.letter}</span><h2 style="display:inline">${sel.name}</h2>
-      <span style="color:var(--muted);font-size:11px;margin-left:6px">${sel.en}</span></div>
+    <article class="card">
+      <div><span class="letter" style="color:${sel.color}">${sel.letter}</span><h2>${sel.name}</h2><span class="en">${sel.en}</span></div>
       <p class="formula">${sel.formula}</p>
       <p class="detail">${sel.detail}</p>
     </article>
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <p class="kicker">Parameter TABRANIJ</p>
+      <p class="kicker" style="margin:0">Parameter TABRANIJ</p>
       <span style="font-size:12px;color:var(--muted)">${d.naik ? "Naik" : "Turun"}</span>
     </div>
     ${["tinggi","awal","inti","rendah"].map((id) => `
@@ -405,33 +513,53 @@ function renderPanel() {
       ${Object.keys(PRESETS).map((n) => `<button data-preset="${n}">${n}</button>`).join("")}
     </div>
   `;
-  document.querySelectorAll("[data-id]").forEach((b) => b.onclick = () => { state.selected = b.dataset.id; applyLayout(); renderPanel(); });
-  document.querySelectorAll("[data-key]").forEach((inp) => {
+  document.querySelectorAll("#panel [data-id]").forEach((b) => b.onclick = () => { state.selected = b.dataset.id; applyLayout(); renderPanel(); });
+  document.querySelectorAll("#panel [data-key]").forEach((inp) => {
     inp.oninput = () => {
       state.prices = sanitize({ ...state.prices, [inp.dataset.key]: +inp.value });
       state.selected = inp.dataset.key;
       applyLayout(); renderPanel();
     };
   });
-  document.querySelectorAll("[data-preset]").forEach((b) => b.onclick = () => {
+  document.querySelectorAll("#panel [data-preset]").forEach((b) => b.onclick = () => {
     state.prices = { ...PRESETS[b.dataset.preset] };
     applyLayout(); renderPanel();
   });
 }
 
+document.getElementById("cards").innerHTML = ORDER.map((id, i) => {
+  const p = ANATOMY[id];
+  return `<button data-jump="${id}">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-family:Syne,sans-serif;font-size:28px;color:${p.color}">${p.letter}</span>
+      <span style="font-size:11px;letter-spacing:.18em;color:var(--muted)">${String(i+1).padStart(2,"0")} · ${p.en}</span>
+    </div>
+    <h3 style="font-family:Syne,sans-serif;margin:10px 0 4px">${p.name}</h3>
+    <p class="formula" style="margin:0">${p.formula}</p>
+    <p style="color:var(--muted);font-size:14px;line-height:1.5;margin:10px 0 0">${p.summary}</p>
+  </button>`;
+}).join("");
+document.querySelectorAll("[data-jump]").forEach((b) => b.onclick = () => {
+  state.selected = b.dataset.jump;
+  applyLayout(); renderPanel();
+  document.getElementById("lab").scrollIntoView({ behavior: "smooth" });
+});
+
+function resize() {
+  const w = viewport.clientWidth, h = viewport.clientHeight;
+  camera.aspect = w / Math.max(h, 1);
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+  labelRenderer.setSize(w, h);
+}
+new ResizeObserver(resize).observe(viewport);
 applyLayout();
 renderPanel();
-
-addEventListener("resize", () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-  labelRenderer.setSize(innerWidth, innerHeight);
-});
+resize();
 function tick() {
   requestAnimationFrame(tick);
   controls.update();
-  intiGem.rotation.y += 0.01;
+  intiGem.rotation.y += 0.012;
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }

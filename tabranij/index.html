@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TABRANIJ — lab kristal harga</title>
+  <meta name="description" content="Anatomi ilmiah satu lilin harga: Tinggi, Atas, Bawah, Rendah, Awal, Neto, Inti, Julat." />
+  <meta property="og:title" content="TABRANIJ" />
+  <meta property="og:description" content="Lab kristal 3D anatomi lilin harga." />
+  <meta property="og:image" content="og.jpg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05060d;
+      --surface: #0c101c;
+      --fg: #e8eefc;
+      --muted: #8b97b8;
+      --primary: #4ec8ff;
+      --border: rgba(232, 238, 252, 0.1);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: Geist, system-ui, sans-serif; }
+    button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+    #stage { position: fixed; inset: 0; }
+    canvas { display: block; }
+    .hud {
+      position: fixed; z-index: 4; pointer-events: none;
+      inset: 0; display: flex; flex-direction: column;
+    }
+    header {
+      pointer-events: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; gap: 12px;
+    }
+    .brand {
+      font-family: Syne, sans-serif; letter-spacing: 0.38em;
+      font-size: 13px; color: var(--primary); font-weight: 700;
+    }
+    header a {
+      color: var(--muted); text-decoration: none; font-size: 12px;
+    }
+    header a:hover { color: var(--fg); }
+    .hint {
+      text-align: center; font-size: 12px; color: var(--muted);
+      pointer-events: none; padding: 0 16px;
+    }
+    .panel {
+      pointer-events: auto;
+      margin: auto 12px 12px auto;
+      width: min(360px, calc(100% - 24px));
+      max-height: min(72vh, 640px);
+      overflow: auto;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 12px; }
+    .chip {
+      border: 0; border-radius: 999px; height: 30px; padding: 0 10px;
+      background: rgba(232,238,252,0.06); color: var(--muted); font-size: 12px;
+    }
+    .chip.on { background: var(--fg); color: var(--bg); }
+    article { background: var(--bg); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    article h2 { margin: 0; font-family: Syne, sans-serif; font-size: 18px; }
+    .letter { font-family: Syne, sans-serif; font-size: 24px; margin-right: 6px; }
+    .formula { color: var(--primary); font-size: 12px; margin: 6px 0; }
+    .detail { font-size: 13px; line-height: 1.5; color: #d7def0; }
+    .row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+    .row span.name { width: 56px; font-size: 12px; }
+    .row input { flex: 1; accent-color: var(--primary); }
+    .row .val { width: 44px; text-align: right; font-variant-numeric: tabular-nums; font-size: 12px; }
+    .derived { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
+    .derived button {
+      display: flex; justify-content: space-between; align-items: baseline;
+      border: 0; border-radius: 8px; padding: 8px 10px;
+      background: rgba(232,238,252,0.05); color: var(--fg);
+    }
+    .derived button.on { background: rgba(232,238,252,0.12); }
+    .presets { display: flex; flex-wrap: wrap; gap: 6px; }
+    .presets button {
+      height: 30px; border: 0; border-radius: 999px; padding: 0 10px;
+      background: rgba(232,238,252,0.05); color: var(--muted); font-size: 12px;
+    }
+    .presets button:hover { color: var(--fg); }
+    .kicker { font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .22em; color: var(--muted); text-transform: uppercase; }
+    .label3d {
+      font-family: Syne, sans-serif; font-size: 11px; letter-spacing: .16em;
+      color: #e8eefc; white-space: nowrap; user-select: none;
+      text-shadow: 0 0 8px #041018;
+      pointer-events: auto; cursor: pointer;
+    }
+    .label3d small { display: block; letter-spacing: .28em; opacity: .75; font-size: 9px; }
+    .label3d.on { color: #fff; }
+    @media (max-width: 720px) {
+      .hud { justify-content: space-between; }
+      .panel { margin: 0 0 0 0; width: 100%; max-height: 42vh; border-radius: 14px 14px 0 0; }
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="stage"></div>
+  <div class="hud">
+    <header>
+      <span class="brand">TABRANIJ</span>
+      <a href="https://github.com/galrei/tabranij">Sumber</a>
+    </header>
+    <p class="hint">Cermin ilmiah anatomi lilin harga. Seret untuk memutar.</p>
+    <aside class="panel" id="panel"></aside>
+  </div>
+  <script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
+
+const ANATOMY = {
+  tinggi: { letter: "T", name: "Tinggi", en: "High", color: "#3b9eff", formula: "max(harga dalam periode)",
+    detail: "Ujung atas sumbu — harga tertinggi. Bola biru di puncak kristal." },
+  atas: { letter: "A", name: "Atas", en: "Top", color: "#dce7ff", formula: "max(Awal, Inti)",
+    detail: "Tepi atas tubuh Neto. Jika Inti ≥ Awal, Atas = Inti. Jika Inti < Awal, Atas = Awal." },
+  bawah: { letter: "B", name: "Bawah", en: "Bottom", color: "#9aa8c7", formula: "min(Awal, Inti)",
+    detail: "Tepi bawah tubuh Neto. Lawan dari Atas. Sumbu menuju Rendah tumbuh dari sini." },
+  rendah: { letter: "R", name: "Rendah", en: "Low", color: "#ff5a3c", formula: "min(harga dalam periode)",
+    detail: "Ujung bawah sumbu — harga terendah. Bola merah-oranye di dasar kristal." },
+  awal: { letter: "A", name: "Awal", en: "Open", color: "#2ee6a8", formula: "harga pembuka periode",
+    detail: "Harga saat periode dimulai. Bersama Inti, ia membentuk tubuh Neto." },
+  neto: { letter: "N", name: "Neto", en: "Body", color: "#4ec8ff", formula: "|Inti − Awal|",
+    detail: "Tubuh kristal, bukan sebuah harga. Terbentuk dari Awal (pembuka) dan Inti (kini / tutup)." },
+  inti: { letter: "I", name: "Inti", en: "Close / Last", color: "#6d8cff", formula: "harga kini / harga penutupan",
+    detail: "Harga saat ini sekaligus harga akhir. Pada lilin naik menempel di Atas; pada lilin turun di Bawah." },
+  julat: { letter: "J", name: "Julat", en: "Range", color: "#5ce1ff", formula: "Tinggi − Rendah",
+    detail: "Seluruh tinggi kristal — jarak dari Rendah ke Tinggi." },
+};
+const ORDER = ["tinggi","atas","bawah","rendah","awal","neto","inti","julat"];
+const PRESETS = {
+  Kristal: { tinggi: 118.6, awal: 104.2, inti: 114.8, rendah: 96.4 },
+  "Marubozu naik": { tinggi: 116.4, awal: 100, inti: 116.2, rendah: 99.8 },
+  "Marubozu turun": { tinggi: 116.4, awal: 116.2, inti: 100, rendah: 99.8 },
+  Doji: { tinggi: 118.5, awal: 108, inti: 108.15, rendah: 97.2 },
+  Palu: { tinggi: 112.2, awal: 110.4, inti: 111.6, rendah: 96.1 },
+  "Tembak bintang": { tinggi: 118.8, awal: 102.4, inti: 101.1, rendah: 100.2 },
+};
+
+const state = {
+  prices: { ...PRESETS.Kristal },
+  selected: "neto",
+  autoRotate: true,
+};
+
+function derived(p) {
+  const atas = Math.max(p.awal, p.inti);
+  const bawah = Math.min(p.awal, p.inti);
+  return { atas, bawah, neto: Math.abs(p.inti - p.awal), julat: p.tinggi - p.rendah, naik: p.inti >= p.awal };
+}
+function sanitize(p) {
+  const awal = +p.awal, inti = +p.inti;
+  return { awal, inti, tinggi: Math.max(+p.tinggi, awal, inti), rendah: Math.min(+p.rendah, awal, inti) };
+}
+
+const JULAT = 4.7;
+function layout(p) {
+  const d = derived(p);
+  const range = Math.max(d.julat, 0.01);
+  const k = JULAT / range;
+  const yAt = (price) => (price - p.rendah) * k - JULAT / 2;
+  const yHigh = yAt(p.tinggi), yLow = yAt(p.rendah);
+  const yBodyTop = yAt(d.atas), yBodyBot = yAt(d.bawah);
+  const span = Math.max(yBodyTop - yBodyBot, 0.22);
+  const tipH = Math.min(0.52, Math.max(0.22, span * 0.26));
+  const yNeto = (yBodyTop + yBodyBot) / 2;
+  return {
+    yHigh, yLow, yBodyTop, yBodyBot, yAwal: yAt(p.awal), yInti: yAt(p.inti),
+    yNeto, yJulat: (yHigh + yLow) / 2, bodyH: span, tipH, crystalY: yNeto,
+    radius: 0.92, bullish: d.naik,
+  };
+}
+
+function hexRing(y, r, twist = Math.PI / 6) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + twist;
+    pts.push(new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
+  }
+  return pts;
+}
+function addFace(pos, nrm, a, b, c) {
+  const n = new THREE.Vector3().subVectors(b, a).cross(new THREE.Vector3().subVectors(c, a)).normalize();
+  pos.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z);
+  nrm.push(n.x, n.y, n.z, n.x, n.y, n.z, n.x, n.y, n.z);
+}
+function buildCrystal(radius, bodyHeight, tipHeight) {
+  const half = bodyHeight / 2;
+  const girdle = hexRing(0, radius);
+  const upper = hexRing(half, radius * 0.72);
+  const lower = hexRing(-half, radius * 0.72);
+  const apex = new THREE.Vector3(0, half + tipHeight, 0);
+  const nadir = new THREE.Vector3(0, -half - tipHeight, 0);
+  const positions = [], normals = [];
+  for (let i = 0; i < 6; i++) {
+    const j = (i + 1) % 6;
+    addFace(positions, normals, apex, upper[i], upper[j]);
+    addFace(positions, normals, upper[i], girdle[i], girdle[j]);
+    addFace(positions, normals, upper[i], girdle[j], upper[j]);
+    addFace(positions, normals, girdle[i], lower[i], lower[j]);
+    addFace(positions, normals, girdle[i], lower[j], girdle[j]);
+    addFace(positions, normals, nadir, lower[j], lower[i]);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute("normal", new THREE.Float32BufferAttribute(normals, 3));
+  return geo;
+}
+
+const stage = document.getElementById("stage");
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x05060d);
+scene.fog = new THREE.Fog(0x05060d, 14, 32);
+const camera = new THREE.PerspectiveCamera(36, innerWidth / innerHeight, 0.1, 80);
+camera.position.set(0.1, 0.2, 8.3);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+renderer.setSize(innerWidth, innerHeight);
+stage.appendChild(renderer.domElement);
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+labelRenderer.domElement.style.position = "absolute";
+labelRenderer.domElement.style.inset = "0";
+labelRenderer.domElement.style.pointerEvents = "none";
+stage.appendChild(labelRenderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enablePan = false;
+controls.enableDamping = true;
+controls.minDistance = 4.2;
+controls.maxDistance = 14;
+controls.minPolarAngle = Math.PI * 0.18;
+controls.maxPolarAngle = Math.PI * 0.82;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+controls.addEventListener("start", () => { state.autoRotate = false; controls.autoRotate = false; });
+
+scene.add(new THREE.HemisphereLight(0xc5ddff, 0x070910, 0.5));
+scene.add(new THREE.AmbientLight(0xffffff, 0.12));
+const spot = new THREE.SpotLight(0x9ed8ff, 48, 40, 0.55, 0.7);
+spot.position.set(5.5, 7, 5);
+scene.add(spot);
+const spot2 = new THREE.SpotLight(0x7a93ff, 22, 30, 0.7, 0.8);
+spot2.position.set(-5, 1.5, 4);
+scene.add(spot2);
+
+const crystal = new THREE.Mesh();
+scene.add(crystal);
+const wickMat = new THREE.MeshStandardMaterial({ color: 0x9bb8d8, metalness: 0.55, roughness: 0.28, emissive: 0x1a3050, emissiveIntensity: 0.28 });
+const upperWick = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 1, 8), wickMat);
+const lowerWick = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 1, 8), wickMat.clone());
+scene.add(upperWick, lowerWick);
+function orb(color) {
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.085, 24, 24), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.15, roughness: 0.25 }));
+  scene.add(m);
+  return m;
+}
+const highOrb = orb(0x3b9eff);
+const lowOrb = orb(0xff5a3c);
+const intiGem = new THREE.Mesh(new THREE.OctahedronGeometry(0.16, 0), new THREE.MeshStandardMaterial({ color: 0x6d8cff, emissive: 0x6d8cff, emissiveIntensity: 0.7, roughness: 0.28, metalness: 0.35 }));
+scene.add(intiGem);
+
+const labelObjs = {};
+function makeLabel(id, extra = "") {
+  const el = document.createElement("div");
+  el.className = "label3d";
+  el.innerHTML = `<b>${ANATOMY[id].letter}</b> ${ANATOMY[id].name.toUpperCase()}${extra}`;
+  el.onclick = () => { state.selected = id; renderPanel(); };
+  const obj = new CSS2DObject(el);
+  scene.add(obj);
+  labelObjs[id] = { el, obj };
+}
+ORDER.filter((id) => id !== "neto").forEach((id) => makeLabel(id));
+const netoSprite = makeCanvasText();
+scene.add(netoSprite);
+
+function makeCanvasText() {
+  const c = document.createElement("canvas");
+  c.width = 256; c.height = 256;
+  const g = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true }));
+  g.userData.canvas = c;
+  g.scale.set(1.15, 1.15, 1);
+  return g;
+}
+function drawNeto(active, scale) {
+  const c = netoSprite.userData.canvas;
+  const ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, 256, 256);
+  ctx.fillStyle = active ? "#ffffff" : "#e8eefc";
+  ctx.textAlign = "center";
+  ctx.font = "700 92px Syne, sans-serif";
+  ctx.fillText("N", 128, 118);
+  ctx.font = "600 28px Syne, sans-serif";
+  ctx.letterSpacing = "8px";
+  ctx.fillText("NETO", 128, 162);
+  netoSprite.material.map.needsUpdate = true;
+  netoSprite.scale.setScalar(Math.min(1.2, Math.max(0.38, scale)));
+}
+
+const julatPts = new THREE.BufferGeometry();
+const julatLine = new THREE.Line(julatPts, new THREE.LineBasicMaterial({ color: 0x5ce1ff }));
+scene.add(julatLine);
+
+function setWick(mesh, from, to) {
+  const h = Math.abs(to - from);
+  mesh.visible = h > 0.03;
+  if (!mesh.visible) return;
+  mesh.scale.set(1, h, 1);
+  mesh.position.set(0, (from + to) / 2, 0);
+}
+
+function applyLayout() {
+  const L = layout(state.prices);
+  if (crystal.geometry) crystal.geometry.dispose();
+  crystal.geometry = buildCrystal(L.radius, L.bodyH, L.tipH);
+  crystal.position.set(0, L.crystalY, 0);
+  crystal.material = new THREE.MeshPhysicalMaterial({
+    color: L.bullish ? 0xd2f1ff : 0xffe4ec,
+    roughness: 0.07, metalness: 0.04, transmission: 0.86, thickness: 1.4, ior: 1.52,
+    clearcoat: 1, iridescence: 0.65, transparent: true,
+    attenuationColor: L.bullish ? 0x3d6ec8 : 0x8a3d5a, attenuationDistance: 0.95,
+    emissive: state.selected === "neto" ? 0x4ec8ff : 0x071018,
+    emissiveIntensity: state.selected === "neto" ? 0.22 : 0.03,
+  });
+  const apexY = L.crystalY + L.bodyH / 2 + L.tipH;
+  const nadirY = L.crystalY - L.bodyH / 2 - L.tipH;
+  setWick(upperWick, apexY, L.yHigh);
+  setWick(lowerWick, nadirY, L.yLow);
+  highOrb.position.set(0, L.yHigh, 0);
+  lowOrb.position.set(0, L.yLow, 0);
+  intiGem.position.set(0, L.yInti, 0);
+  intiGem.material.color.set(L.bullish ? 0x2ee6a8 : 0xff5a3c);
+  intiGem.material.emissive.set(L.bullish ? 0x2ee6a8 : 0xff5a3c);
+  netoSprite.position.set(0, L.yNeto, 0);
+  drawNeto(state.selected === "neto", L.bodyH / 1.7);
+  const pos = {
+    tinggi: [0.95, L.yHigh, 0],
+    atas: [1.25, L.yBodyTop + L.tipH * 0.45, 0],
+    inti: [2.15, L.yInti, 0],
+    bawah: [1.15, L.yBodyBot - L.tipH * 0.15, 0],
+    rendah: [1.05, L.yLow, 0],
+    awal: [-2.35, L.yAwal, 0],
+    julat: [-2.15, L.yJulat, 0],
+  };
+  for (const id of Object.keys(pos)) {
+    labelObjs[id].obj.position.set(...pos[id]);
+    labelObjs[id].el.classList.toggle("on", state.selected === id);
+  }
+  const x = -1.72, cap = 0.26;
+  julatPts.setFromPoints([
+    new THREE.Vector3(x + cap, L.yHigh, 0),
+    new THREE.Vector3(x, L.yHigh, 0),
+    new THREE.Vector3(x, L.yLow, 0),
+    new THREE.Vector3(x + cap, L.yLow, 0),
+  ]);
+}
+
+function renderPanel() {
+  const p = state.prices;
+  const d = derived(p);
+  const sel = ANATOMY[state.selected];
+  document.getElementById("panel").innerHTML = `
+    <p class="kicker">Anatomi</p>
+    <div class="chips">
+      ${ORDER.map((id) => `<button class="chip ${state.selected===id?"on":""}" data-id="${id}"><span style="color:${state.selected===id?"":ANATOMY[id].color}">${ANATOMY[id].letter}</span> ${ANATOMY[id].name}</button>`).join("")}
+    </div>
+    <article>
+      <div><span class="letter" style="color:${sel.color}">${sel.letter}</span><h2 style="display:inline">${sel.name}</h2>
+      <span style="color:var(--muted);font-size:11px;margin-left:6px">${sel.en}</span></div>
+      <p class="formula">${sel.formula}</p>
+      <p class="detail">${sel.detail}</p>
+    </article>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <p class="kicker">Parameter TABRANIJ</p>
+      <span style="font-size:12px;color:var(--muted)">${d.naik ? "Naik" : "Turun"}</span>
+    </div>
+    ${["tinggi","awal","inti","rendah"].map((id) => `
+      <label class="row"><span class="name" style="color:${ANATOMY[id].color}">${ANATOMY[id].name}</span>
+      <input type="range" min="70" max="145" step="0.1" data-key="${id}" value="${p[id]}" />
+      <span class="val">${p[id].toFixed(1)}</span></label>`).join("")}
+    <div class="derived">
+      ${["atas","bawah","neto","julat"].map((id) => `
+        <button data-id="${id}" class="${state.selected===id?"on":""}">
+          <span><b style="color:${ANATOMY[id].color}">${ANATOMY[id].letter}</b> ${ANATOMY[id].name}</span>
+          <span>${d[id].toFixed(1)}</span>
+        </button>`).join("")}
+    </div>
+    <div class="presets">
+      ${Object.keys(PRESETS).map((n) => `<button data-preset="${n}">${n}</button>`).join("")}
+    </div>
+  `;
+  document.querySelectorAll("[data-id]").forEach((b) => b.onclick = () => { state.selected = b.dataset.id; applyLayout(); renderPanel(); });
+  document.querySelectorAll("[data-key]").forEach((inp) => {
+    inp.oninput = () => {
+      state.prices = sanitize({ ...state.prices, [inp.dataset.key]: +inp.value });
+      state.selected = inp.dataset.key;
+      applyLayout(); renderPanel();
+    };
+  });
+  document.querySelectorAll("[data-preset]").forEach((b) => b.onclick = () => {
+    state.prices = { ...PRESETS[b.dataset.preset] };
+    applyLayout(); renderPanel();
+  });
+}
+
+applyLayout();
+renderPanel();
+
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  labelRenderer.setSize(innerWidth, innerHeight);
+});
+function tick() {
+  requestAnimationFrame(tick);
+  controls.update();
+  intiGem.rotation.y += 0.01;
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+}
+tick();
+  </script>
+</body>
+</html>
